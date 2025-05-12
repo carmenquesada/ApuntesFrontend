@@ -257,7 +257,91 @@ Text inputs: where user introduces some kind of text. It is usually the most gen
 
 Image/File pickers: where user can select an image/file from its gallery or file system in order to upload them.
 
+Ejemplo: ver CreateRestaurantScreen.js
+
 Select/Dropdown: where users can select a value for a field from a given set of options. Typical use cases includes: select some category from the ones that exist, select some status value from a given set of possible values.
 
+In order to populate the options of the DropDownPicker we need:
+
+Import the DropDownPickercomponent:
+
+import DropDownPicker from 'react-native-dropdown-picker'
+
+A state to store the restaurant categories:
+
+const [restaurantCategories, setRestaurantCategories] = useState([])
+
+A boolean state to set if the option list of the DropDownPicker are visible or not:
+
+const [open, setOpen] = useState(false)
+
+A useEffect hook to retrieve the restaurant categories from backend:
+
+    useEffect(() => {
+      async function fetchRestaurantCategories () {
+        try {
+          const fetchedRestaurantCategories = await getRestaurantCategories()
+          const fetchedRestaurantCategoriesReshaped = fetchedRestaurantCategories.map((e) => {
+            return {
+              label: e.name,
+              value: e.id
+            }
+          })
+          setRestaurantCategories(fetchedRestaurantCategoriesReshaped)
+        } catch (error) {
+          showMessage({
+            message: `There was an error while retrieving restaurant categories. ${error} `,
+            type: 'error',
+            style: GlobalStyles.flashStyle,
+            titleStyle: GlobalStyles.flashTextStyle
+          })
+        }
+      }
+      fetchRestaurantCategories()
+    }, [])
+
+Finally, we have to add the component in the return sentence of the CreateRestaurantScreen component. Find below a code snippet to add a DropDownPicker component for restaurant categories:
+
+    <DropDownPicker
+      open={open}
+      value={values.restaurantCategoryId}
+      items={restaurantCategories}
+      setOpen={setOpen}
+      onSelectItem={ item => {
+        setFieldValue('restaurantCategoryId', item.value)
+      }}
+      setItems={setRestaurantCategories}
+      placeholder="Select the restaurant category"
+      containerStyle={{ height: 40, marginTop: 20 }}
+      style={{ backgroundColor: GlobalStyles.brandBackground }}
+      dropDownStyle={{ backgroundColor: '#fafafa' }}
+    />
+
 Switches: where user is asked between two options that are typically send as a boolean.
+
+First, you have to add the Switch component to the import statement of the react-native components:
+
+import { Image, Platform, Pressable, ScrollView, StyleSheet, Switch, View } from 'react-native'
+
+Find below a code snippet for including a Switch component for the product availability:
+
+    <TextRegular style={styles.switch}>Is it available?</TextRegular>
+    <Switch
+      trackColor={{ false: GlobalStyles.brandSecondary, true: GlobalStyles.brandPrimary }}
+      thumbColor={values.availability ? GlobalStyles.brandSecondary : '#f4f3f4'}
+      value={values.availability}
+      style={styles.switch}
+      onValueChange={value =>
+        setFieldValue('availability', value)
+      }
+    />
+
+And you can add some styling to your StyleSheet:
+
+switch: {
+  marginTop: 20
+}
+
+
+
 
