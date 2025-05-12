@@ -6,14 +6,15 @@ import * as GlobalStyles from '../../styles/GlobalStyles'
 
 export default function RestaurantsScreen({ navigation }) { // Crea un componente funcional: RestaurantsScreen que recibe un prop: navigation (cambiar de pantalla)
   const [restaurants, setRestaurants] = useState([]) // At first render, the restaurants state object will be empty
-  
+
+  // Need to load restaurants in the state: useEffect
   useEffect(() => {
     console.log('Loading restaurants, please wait 2 seconds')
     setTimeout(() => {
       setRestaurants(getAll) // getAll function has to be imported
       console.log('Restaurants loaded')
-    }, 2000)
-  }, [])
+    }, 2000) // Esperar 2000 ms, es decir, 2 segundos
+  }, []) // Se ejecuta una sola vez porque dependencies está vacío []
   
   return (
     <View style={styles.container}> // View: agrupar cosas visualmente
