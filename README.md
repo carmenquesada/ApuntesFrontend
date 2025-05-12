@@ -154,4 +154,4 @@ Notice that we do not need to check if a user is logged in, as the details of re
 
 Check that restaurant details and products are retrieved from the backend and listed at RestaurantDetailScreen component.
 
-Ver RestaurantsEndpointsLab2.js y RestaurantDetailScreenLab2.js
+Ver RestaurantsEndpointsLab2.js y RestaurantDetailScreenFetch.js
