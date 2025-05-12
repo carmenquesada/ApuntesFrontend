@@ -6,18 +6,19 @@ export default function RestaurantDetailScreen ({ route }) { // El componente Re
   useEffect(() => {
     console.log('Loading restaurant details, please wait 1 second')
     setTimeout(() => {
-      setRestaurant(getDetail(route.params.id))
+      setRestaurant(getDetail(route.params.id)) // Obtiene los detalles del restaurant y usa el id de la pantalla anterior
       console.log('Restaurant details loaded')
     }, 1000)
   }, [])
-  
-  const renderProduct = ({ item }) => {
+
+  // Se utiliza para renderizar cada producto dentro de FlatList
+  const renderProduct = ({ item }) => { // La función recibe un 'item' que representa un rpoducto individual
     return (
-      <Pressable
+      <Pressable // Cada producto es clickeable
         style={styles.row}
-        onPress={() => { }}>
+        onPress={() => { }}> // Cuando el usuario presiona el botón...
           <TextRegular>
-              {item.name}
+              {item.name} // se muestra el nombre del producto
           </TextRegular>
       </Pressable>
     )
