@@ -155,3 +155,73 @@ Notice that we do not need to check if a user is logged in, as the details of re
 Check that restaurant details and products are retrieved from the backend and listed at RestaurantDetailScreen component.
 
 Ver RestaurantsEndpointsLab2.js y RestaurantDetailScreenFetch.js
+
+# LAB 3
+# FlexBox
+
+React Native usa Flexbox como sistema de diseño para organizar cómo se posicionan y dimensionan los componentes hijos dentro de un componente contenedor
+
+Supongamos que tienes una View que contiene varios elementos hijos (como botones, textos, imágenes...). Puedes controlar cómo se posicionan estos hijos dentro del contenedor con las siguientes propiedades:
+
+* flexDirection: define la dirección principal en la que se organizan los hijos:
+
+column (por defecto): los hijos se colocan uno debajo del otro (verticalmente).
+
+row: los hijos se colocan uno al lado del otro (horizontalmente).
+
+    <View style={{ flexDirection: 'row' }}>
+      <Text>Uno</Text>
+      <Text>Dos</Text>
+    </View>
+
+* justifyContent: controla la distribución de los elementos en la dirección principal (eje principal):
+
+flex-start (por defecto): los hijos se agrupan al inicio del eje.
+
+center: los hijos se agrupan en el centro del eje.
+
+flex-end: los hijos se agrupan al final del eje.
+
+space-between: espacio igual entre los elementos.
+
+space-around: espacio igual alrededor de cada elemento.
+
+    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+      <Text>Izquierda</Text>
+      <Text>Centro</Text>
+      <Text>Derecha</Text>
+    </View>
+
+* alignItems: controla la alineación de los hijos en el eje secundario (el eje perpendicular al flexDirection):
+
+flex-start: alineados al principio del eje secundario.
+
+center: centrados en el eje secundario.
+
+flex-end: alineados al final del eje secundario.
+
+stretch (por defecto): los hijos se estiran para ocupar todo el espacio disponible.
+
+    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+      <Text>Elemento centrado verticalmente</Text>
+    </View>
+
+Ejemplo: mostrará los tres elementos horizontalmente (por row), centrados verticalmente (alignItems: center) y espaciados uniformemente (space-around)
+
+    <View style={{
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      alignItems: 'center',
+      height: 100,
+      backgroundColor: '#eee'
+    }}>
+      <Text>🔵</Text>
+      <Text>🟢</Text>
+      <Text>🔴</Text>
+    </View>
+
+# Views as containers
+
+View es un contenedor que agrupa otros elementos y controla su posición, tamaño, márgenes y comportamiento con Flexbox.
+
+Ejemplo: ver CreateRestaurantScreen.js
