@@ -5,6 +5,16 @@ import { getAll } from '../../api/RestaurantEndpoints'
 import * as GlobalStyles from '../../styles/GlobalStyles'
 
 export default function RestaurantsScreen({ navigation }) { // Crea un componente funcional: RestaurantsScreen que recibe un prop: navigation (cambiar de pantalla)
+  const [restaurants, setRestaurants] = useState([]) // At first render, the restaurants state object will be empty
+  
+  useEffect(() => {
+    console.log('Loading restaurants, please wait 2 seconds')
+    setTimeout(() => {
+      setRestaurants(getAll) // getAll function has to be imported
+      console.log('Restaurants loaded')
+    }, 2000)
+  }, [])
+  
   return (
     <View style={styles.container}> // View: agrupar cosas visualmente
       <TextRegular style={{ fontSize: 16, alignSelf: 'center', margin: 20 }}>Random Restaurant</TextRegular> // TextRegular: mostrar texto con estilo común en pantalla
@@ -28,3 +38,5 @@ export default function RestaurantsScreen({ navigation }) { // Crea un component
     </View>
   )
 }
+
+
