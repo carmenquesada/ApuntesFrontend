@@ -1,5 +1,5 @@
 # LAB1 
-# Components
+# 1 Components
 Un componente en React es como una pieza reutilizable de una interfaz de usuario. Piensa en ellos como piezas de LEGO: puedes construir una interfaz completa uniendo componentes más pequeños.
 
 Por ejemplo:
@@ -13,7 +13,7 @@ Recibe unos parámetros llamados props y devuelve lo que React debe mostrar en p
 
 Ejemplo: ver RestaurantsScreen
 
-# States
+# 2 States
 Cuando un componente necesita recordar información entre renders (entre que se dibuja y se vuelve a dibujar en pantalla), esa información se guarda en lo que se llama el estado.
 
 Por ejemplo:
@@ -44,10 +44,41 @@ Al principio, restaurants está vacío [], cuando llamas a una API para cargar l
 
 Llamas a setRestaurants(datos) y React actualiza la pantalla para mostrar los nuevos datos
 
-# Props
+# 3 Props
 
 Son la forma en que un componente recibe datos desde otro componente.
 
 Es decir, si el componente A muestra o usa al componente B, puede pasarle información mediante props.
 
 Ejemplo: ver RestaurantDetailScreen
+
+# 4 Hooks
+
+Los hooks son funciones especiales que React nos da para:
+
+Agregar comportamiento a componentes funcionales (sin necesidad de clases).
+
+1. useState → Guardar y actualizar datos del componente (ver en el punto 2)
+2. useEffect → Ejecutar código en momentos específicos (como cargar datos al iniciar)
+3. useContext → Compartir datos entre muchos componentes (lo verás más adelante)
+
+useEffect
+
+    useEffect(() => {
+
+     //code to be executed
+   
+    }, [object1, object2, ...]) // se ejecuta cada vez que cambien estas variables, si está vacío se ejecuta solo al inicio y si no está se ejecuta siempre tras cada render
+
+Ejemplo: 
+
+    const [restaurants, setRestaurants] = useState([])
+
+    useEffect(() => {
+      getAll().then(data => setRestaurants(data))
+    }, []) // se ejecuta una vez al inicio
+
+1. El componente se muestra por primera vez
+2. useEffect se ejecuta solo al inicio '[]'
+3. getAll() obtiene los restaurantes
+4. setRestaurants(data) guarda los datos
