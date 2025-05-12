@@ -16,15 +16,17 @@ export default function RestaurantsScreen({ navigation }) { // Crea un component
     }, 2000) // Esperar 2000 ms, es decir, 2 segundos
   }, []) // Se ejecuta una sola vez porque dependencies está vacío []
 
+
+  // Esta funcion se usa para saber cómo mostrar cada elemento de una lista FlatList
   const renderRestaurant = ({ item }) => {
     return (
       <Pressable
         style={styles.row}
         onPress={() => {
-          navigation.navigate('RestaurantDetailScreen', { id: item.id })
+          navigation.navigate('RestaurantDetailScreen', { id: item.id }) // Al hacer tap cambia de pantalla
         }}>
           <TextRegular>
-              {item.name}
+              {item.name} // Muestra el nombre del restaurante dentro del botón
           </TextRegular>
       </Pressable>
     )
