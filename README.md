@@ -82,3 +82,47 @@ Ejemplo:
 2. useEffect se ejecuta solo al inicio '[]'
 3. getAll() obtiene los restaurantes
 4. setRestaurants(data) guarda los datos
+
+# 5 FlatList
+
+Muestra listas de elementos (como un scroll de tarjetas).
+
+Solo renderiza en pantalla lo necesario (mejor rendimiento).
+
+Necesita unos props obligatorios: data, renderItem y keyExtractor.
+
+1. data: es el array que contiene los datos que vas a mostrar (en este caso, los restaurantes).
+
+    data={restaurants}
+
+2. renderItem: es la función que define cómo se ve cada elemento de la lista.
+
+     const renderRestaurant = ({ item }) => { // item es el restaurante renderizando
+   
+       return (
+           <Pressable
+              style={styles.row}
+              onPress={() => { // Al pulsar el boton...
+                navigation.navigate('RestaurantDetailScreen', { id: item.id }) // se navega a RestaurantDetailScreen pasando id del restaurante como parámetro
+              }}
+            >
+              <TextRegular>{item.name}</TextRegular>
+            </Pressable>
+       )
+     }
+
+3. keyExtractor: sive para darle a cada elemento una clave única que React usa para identificarlo
+
+   keyExtractor={item => item.id.toString()}
+
+Ejemplo: 
+
+    return (
+      <FlatList
+        style={styles.container}
+        data={restaurants} // Restaurants como fuente de datos
+        renderItem={renderRestaurant} // Mostrar cada restaurante
+        keyExtractor={item => item.id.toString()} // id como clave única para cada item
+      />
+    )
+
