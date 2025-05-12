@@ -225,3 +225,29 @@ Ejemplo: mostrará los tres elementos horizontalmente (por row), centrados verti
 View es un contenedor que agrupa otros elementos y controla su posición, tamaño, márgenes y comportamiento con Flexbox.
 
 Ejemplo: ver CreateRestaurantScreen.js
+
+# ScrollViews
+
+Encargado de resolver este problema: cuando tu pantalla tiene más elementos que el alto del dispositivo permite ver, no puedes verlos todos ni hacer scroll si usas un simple View.
+
+Add  <ScrollView
+    </ScrollView>
+
+# Forms
+
+Cuando hacés un formulario en React o React Native (por ejemplo, un formulario para crear un restaurante), hay que:
+
+Crear estados para cada campo (useState)
+
+Manejar los cambios (onChange)
+
+Validar los datos (que no esté vacío, que sea un email válido, etc.)
+
+Mostrar errores si hay problemas
+
+Manejar el envío del formulario
+
+Hacer todo eso a mano es mucho trabajo. Formik automatiza todo eso.
+
+Ejemplo: ver Formik.js
+
