@@ -126,3 +126,19 @@ Ejemplo:
       />
     )
 
+# LAB 2
+# RESTful API Requests
+# Context
+En React (y React Native), un Contexto es una forma de compartir datos globales entre componentes sin tener que pasarlos manualmente de componente en componente mediante props.
+
+AuthorizationContext
+
+En tu caso, el AuthorizationContext es un contexto que guarda la información del usuario que ha iniciado sesión (logged-in user). De ahí sacas una variable muy importante:
+
+const { loggedInUser } = useContext(AuthorizationContext)
+
+useContext() es un hook que te permite acceder a los valores globales definidos en un contexto.
+
+Al llamar a useContext(AuthorizationContext), estás accediendo al objeto que contiene el estado del usuario autenticado. De ese objeto, extraes la propiedad loggedInUser.
+
+Ejemplo: ver RestaurantsScreenLab2.js
