@@ -15,6 +15,20 @@ export default function RestaurantsScreen({ navigation }) { // Crea un component
       console.log('Restaurants loaded')
     }, 2000) // Esperar 2000 ms, es decir, 2 segundos
   }, []) // Se ejecuta una sola vez porque dependencies está vacío []
+
+  const renderRestaurant = ({ item }) => {
+    return (
+      <Pressable
+        style={styles.row}
+        onPress={() => {
+          navigation.navigate('RestaurantDetailScreen', { id: item.id })
+        }}>
+          <TextRegular>
+              {item.name}
+          </TextRegular>
+      </Pressable>
+    )
+  }
   
   return (
     <View style={styles.container}> // View: agrupar cosas visualmente
@@ -36,6 +50,12 @@ export default function RestaurantsScreen({ navigation }) { // Crea un component
           Go to Random Restaurant Details // Texto del botón
         </TextRegular>
       </Pressable>
+      <FlatList
+        style={styles.container}
+        data={restaurants}
+        renderItem={renderRestaurant}
+        keyExtractor={item => item.id.toString()}
+      />
     </View>
   )
 }
