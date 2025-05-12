@@ -142,3 +142,16 @@ useContext() es un hook que te permite acceder a los valores globales definidos 
 Al llamar a useContext(AuthorizationContext), estás accediendo al objeto que contiene el estado del usuario autenticado. De ese objeto, extraes la propiedad loggedInUser.
 
 Ejemplo: ver RestaurantsScreenLab2.js
+
+# RestaurantDetail implementation
+Now we need to modify our code to retrieve restaurant details. To this end, modify your code to:
+
+Change getDetail(id) function of RestaurantEndpoints.js
+
+Change useEffect function of RestaurantDetailScreen.js
+
+Notice that we do not need to check if a user is logged in, as the details of restaurants are public.
+
+Check that restaurant details and products are retrieved from the backend and listed at RestaurantDetailScreen component.
+
+Ver RestaurantsEndpointsLab2.js
