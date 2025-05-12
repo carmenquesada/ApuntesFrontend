@@ -251,3 +251,13 @@ Hacer todo eso a mano es mucho trabajo. Formik automatiza todo eso.
 
 Ejemplo: ver Formik.js
 
+Forms present to the user various input fields. The most popular are:
+
+Text inputs: where user introduces some kind of text. It is usually the most general input, we can use it so users can include information such as: names, surnames, emails, descriptions, urls, addresses, prices, postal codes or telephones. You have been provided the src/components/InputItem.js component that returns: a) a TextInput, b) a label for the input and c) some elements needed for validation that we will use in the next lab.
+
+Image/File pickers: where user can select an image/file from its gallery or file system in order to upload them.
+
+Select/Dropdown: where users can select a value for a field from a given set of options. Typical use cases includes: select some category from the ones that exist, select some status value from a given set of possible values.
+
+Switches: where user is asked between two options that are typically send as a boolean.
+
