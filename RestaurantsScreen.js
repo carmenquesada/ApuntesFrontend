@@ -52,9 +52,9 @@ export default function RestaurantsScreen({ navigation }) { // Crea un component
       </Pressable>
       <FlatList
         style={styles.container}
-        data={restaurants}
-        renderItem={renderRestaurant}
-        keyExtractor={item => item.id.toString()}
+        data={restaurants} // restaurantes como fuente de datos
+        renderItem={renderRestaurant} // mostrar cada restaurante 
+        keyExtractor={item => item.id.toString()} // id como clave única para cada item
       />
     </View>
   )
