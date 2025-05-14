@@ -342,6 +342,187 @@ switch: {
   marginTop: 20
 }
 
+# LAB 4
+# CreateRestaurant Form validation
+Validation should check if the filled data matches the requirements set in the various form inputs. For instance: an input for email should contain a valid email, or password should have a minimum size, or some input is required.
 
+Validation for CreateRestaurantScreen
 
+1. Complete the import sentences of Formik and ErrorMessage from 'formik', and yup from yup as follows:
 
+       import { ErrorMessage, Formik } from 'formik'
+       import * as yup from 'yup'
+2. Keep in mind that Formik needs to be fed with an object of the initial values of the form inputs as follows. Remember that these names has to match the ones that the backend expects when creating a Restaurant:
+
+       const initialRestaurantValues = { name: null, description: null, address: null, postalCode: null, url: null, shippingCosts: null, email: null, phone: null, restaurantCategoryId: null }
+
+3. Define a new validationSchema object by using yup rules. This validationSchema will be used by Formik to check the validity of the fields. You can use the following code snippet:
+
+        const validationSchema = yup.object().shape({
+        name: yup
+          .string()
+          .max(255, 'Name too long')
+          .required('Name is required'),
+        address: yup
+          .string()
+          .max(255, 'Address too long')
+          .required('Address is required'),
+        postalCode: yup
+          .string()
+          .max(255, 'Postal code too long')
+          .required('Postal code is required'),
+        url: yup
+          .string()
+          .nullable()
+          .url('Please enter a valid url'),
+        shippingCosts: yup
+          .number()
+          .positive('Please provide a valid shipping cost value')
+          .required('Shipping costs value is required'),
+        email: yup
+          .string()
+          .nullable()
+          .email('Please enter a valid email'),
+        phone: yup
+          .string()
+          .nullable()
+          .max(255, 'Phone too long'),
+        restaurantCategoryId: yup
+          .number()
+          .positive()
+          .integer()
+          .required('Restaurant category is required')
+        })
+
+   
+Notice that:
+
+* There should be a property named after each of the form inputs that needs validation.
+
+* Rules defined above include: a type of data that is expected (string, or number for instance), the length of strings, if a number can be negative or not, and if an input is required .
+
+* If the field does not follow any of these rules, the message passed to each rule should be shown to the user. For instance, if the shippingCosts is not a positive number, the message Please provide a valid shipping cost value will be shown.
+
+4. Remember that the inputs have to be nested under the Formik component. Add the following:
+       <Formik
+      validationSchema={validationSchema}
+      initialValues={initialRestaurantValues}
+      onSubmit={createRestaurant}>
+      {({ handleSubmit, setFieldValue, values }) => (
+        <ScrollView>
+          /* Your views, form inputs, submit button/pressable */
+        </ScrollView>
+      )}
+    </Formik>
+
+The Formik component is in charge of handling the form values, validation, errors and submission. To this end we have to define the following properties:
+
+validationSchema: the validation rules, usually a yup object.
+
+initialValues: the initial values given to each of the form inputs.
+
+onSubmit: the function to be called when the inserted form values pass the validation. Usually we will call a function that will be in charge of preparing the data and using a creation endpoint for the entity. We will learn how to POST data to the backend later. At this moment we will just print the values in console.
+
+    const createRestaurant = async (values) => {
+      //later we will call a method to perform a POST request
+      console.log(values)
+    }
+
+handleSubmit: is the function that triggers the validation. It has to be called when the user presses the submission button.
+
+values: is the array of elements that represents the state of the form.
+
+setFieldValue: sometimes we will have to manually handle the storage of field values. This is a function that receives as first parameter the name of the field, and as second parameter the value for that field. It will be needed for non standard InputItems such as Imagepickers or Dropdown/select input controls.
+
+5. Next, we need to modify the behaviour of some components so they use the values object properties handled by Formik.
+
+Modify the DropDownPicker so the following properties are defined as:
+
+        <DropDownPicker
+          open={open}
+          value={values.restaurantCategoryId}
+          items={restaurantCategories}
+          setOpen={setOpen}
+          onSelectItem={ item => {
+            setFieldValue('restaurantCategoryId', item.value)
+          }}
+          setItems={setRestaurantCategories}
+          placeholder='Select the restaurant category'
+          containerStyle={{ height: 40, marginTop: 20 }}
+          style={{ backgroundColor: GlobalStyles.brandBackground }}
+          dropDownStyle={{ backgroundColor: '#fafafa' }}
+        />
+
+InputItem is a component the includes the error handling. However, non-standard input controls from 3rd parties don't handle Formik errors. For instance, Dropdown picker does not handle these errors, so add the following <ErrorMessage> component following the dropdown picker:
+
+        <ErrorMessage name={'restaurantCategoryId'} render={msg => <TextError>{msg}</TextError> }/>
+
+Modify the Imagepickers as follows (example for logo image picker):
+
+        <Pressable
+      onPress={() =>
+        pickImage(
+          async result => {
+            await setFieldValue('logo', result)
+          }
+        )
+      }
+      style={styles.imagePicker}
+    >
+      <TextRegular>Logo: </TextRegular>
+      <Image style={styles.image} source={values.logo ? { uri: values.logo.assets[0].uri } : restaurantLogo} />
+    </Pressable>
+
+6. Next, we need to modify the final <Pressable> component to call the handleSubmit method. Modify the onPress handler definition: onPress={handleSubmit}
+
+# POST Request to create a restaurant
+
+Backend provides a POST endpoint to create a restaurant. Notice that handling of images and files is already solved at frontend and backend in various provided artifacts. To include the POST request to your project, you can follow these steps:
+
+1. Add new endpoint In order to create a restaurant, we have to perform a POST request to /restaurants. ApiRequestHelper includes a post function that help us with this, we just need to provide the route and the data to be posted. To this end, include the following at the RestaurantEndpoints.js file:
+
+       function create (data) {
+        return post('restaurants', data)
+       }
+
+Remember to import the post function from ApiRequestHelper and export the create function as well.
+
+2. Implement createRestaurant function at CreateRestaurantScreen.js file. In the previous exercise we just printed the values in the console. Now we need to make the API POST request. To this end keep in mind that:
+
+Errors can occur at backend, so we need to handle the backend response to check if some errors ocurred.
+
+I/O operations can freeze the interface so we need to handle with promises. The cleanest way of doing so is to declare the function async and using await when calling to the API.
+
+Once the restaurant is created we may navigate to the RestaurantsScreen. You will need to declare the {route} param at the component level, and you will need to navigate including some information, so the RestaurantScreen will refresh the restaurant list and therefore the newly created restaurant is listed. To address these issues, we propose the following code snippet:
+
+        const createRestaurant = async (values) => {
+          setBackendErrors([])
+          try {
+            const createdRestaurant = await create(values)
+            showMessage({
+              message: `Restaurant ${createdRestaurant.name} succesfully created`,
+              type: 'success',
+              style: GlobalStyles.flashStyle,
+              titleStyle: GlobalStyles.flashTextStyle
+            })
+            navigation.navigate('RestaurantsScreen', { dirty: true })
+          } catch (error) {
+            console.log(error)
+            setBackendErrors(error.errors)
+          }
+        }
+
+Moreover, we will need to store backend errors that eventually are returned in a state variable:
+        const [backendErrors, setBackendErrors] = useState()
+
+And finally, we will need to show backendErrors if present. To do so, we can add the following at the end of the form, just before the Save last Pressable:
+
+        {backendErrors &&
+          backendErrors.map((error, index) => <TextError key={index}>{error.msg}</TextError>)
+        }
+
+# Create product validation and POST
+
+Follow the same steps to validate the create product form and to perform the post request.
+
+Notice that when creating a new product, we will need to include the restaurantId where it belongs. This restaurant id should be received as: route.params.id when navigating from RestaurantDetailScreen to the CreateProductScreen.
